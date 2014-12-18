@@ -1,0 +1,19 @@
+{
+  "name": "ServerApp",
+  "version": "0.0.0",
+  "description": "ServerApp",
+  "main": "server.js",
+  "author": {
+    "name": "jose.miguel.malaca",
+    "email": "jose.miguel.malaca@me.com"
+  },
+  "dependencies": {
+    "0": "0.0.0",
+    "ejs": "^1.0.0",
+    "express": "^4.10.6",
+    "oauth": "^0.9.12",
+    "prettyjson": "^1.0.0",
+    "request": "^2.51.0",
+    "url": "^0.10.1"
+  }
+}
