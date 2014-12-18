@@ -14,6 +14,18 @@ serverApp.get('/', function (req, response) {
     });
 });
 
+//Route definition: /tweets/searchString
+serverApp.get('/sentiment/:searchString', function (req, response) {
+    console.log("\n -Tweets Call...");
+    
+    //get the request string data...
+    var searchString = req.params.searchString;
+    console.log(" -Search String: " + searchString);
+
+    //Call Tweeter...
+    var connector = require('./TwitterConnector/TwitterConnector.js');
+});
+
 //Start listen on port...
 var server = serverApp.listen(8080, function () {
 
@@ -24,3 +36,6 @@ var server = serverApp.listen(8080, function () {
         host = "localhost";
     console.log('\nApp listening at http://%s:%s', host, port);
 });
+
+//Sentiment Analysis System Up and ready...
+var system = require('./SentimentAnalysis/SentimentAnalysis.js');
