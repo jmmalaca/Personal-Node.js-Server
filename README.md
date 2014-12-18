@@ -8,7 +8,7 @@
 #####Technologies used:
 - Node.js
 
-####Instalation:
+#####Instalation:
 - Download all files
 - Install node on your machine
 - just type in your console: node server.js
