@@ -9,7 +9,7 @@
 - Node.js
 
 #####Instalation:
-- Download all files
 - Install node on your machine
+- Download all files
 - just type in your console: node server.js
 - Just to test write in your browser: "localhost:8080" and receive "Hello".
