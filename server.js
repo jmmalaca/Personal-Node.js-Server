@@ -1,6 +1,7 @@
-﻿var express = require('express'); //express module
-var request = require('request'); //request module
-var url = require('url'); //url module
+﻿var express = require('express'); //express npm module
+var request = require('request'); //request npm module
+var url = require('url'); //url npm module
+var SentimentAnalysis = require('./SentimentAnalysis/SentimentAnalysis.js');
 
 //get a express app started...
 var serverApp = express();
@@ -38,4 +39,5 @@ var server = serverApp.listen(8080, function () {
 });
 
 //Sentiment Analysis System Up and ready...
-var system = require('./SentimentAnalysis/SentimentAnalysis.js');
+var system = new SentimentAnalysis();
+system.Start();

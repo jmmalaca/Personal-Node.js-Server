@@ -1,24 +1,40 @@
 ﻿//Sentiment Analysis System
+var DataReader = require('../SentimentData/DataReader.js');
 
-//Constructor
-function SentimentAnalysis() {
+(function() {
+    
+    "use strict";
+    // Define your library strictly...
 
-    //Start...
-    this.filePath = "";
+    function SentimentAnalysis() {
 
-};
+        this.filePath = "";
 
-//Methods
-SentimentAnalysis.prototype.SetupData = function () {
-    console.log(" -SA reading initial data...");
+        //Private Methods
+        function SetupData() {
+            console.log(" -SA reading initial data...");
 
-    var reader = require('./SentimentData/DataReader.js');
+        }
 
-}
+        function Train() {
+            console.log(" -SA training step...");
+        }
+        
+        //Public Methods
+        this.Start = function() {
+            console.log(" -Start SA system...");
 
-SentimentAnalysis.prototype.Train = function() {
-    console.log(" -SA training step...");
-}
+            //Read Data...
+            var reader = new DataReader();
+            var data = reader.Read();
+            reader.PrintData(data);
 
-//Export the SA System Object
-module.exports = SentimentAnalysis;
+            //Train... or read System trained...
+
+            //Setup system for classification...
+        }
+    }
+
+    //Export the SA System Object
+    module.exports = SentimentAnalysis;
+}());

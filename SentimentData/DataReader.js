@@ -1,18 +1,45 @@
-﻿//Data reader...
+﻿var fs = require('fs');
+//Data reader...
 
-//Constructor
-function DataReader(){
+(function() {
+    
+    "use strict";
+    // Define your library strictly...
+    
+    function DataReader() {
+        
+        var tweetsFilePath = './SentimentData/tweets.txt';
 
-    this.filePath = "";
+        //Private Methods
 
-    this.Read();
-}
 
-//Methods
-DataReader.prototype.Read = function() {
-    console.log(" -Data Reader reading...");
+        //Public Methods
+        this.Read = function () {
+            console.log(" -Data Reader reading...");
 
-};
+            var tweets = [];
+            fs.readFile(tweetsFilePath, function (err, data) {
 
-//Export the class
-module.exports = DataReader;
+                if (err) throw err;
+                
+                tweets = data.toString().split("\n");
+            });
+            return tweets;
+        };
+
+        this.PrintData = function (tweets) {
+            console.log("Data available:");
+
+            tweets.forEach(function (tweet) {
+                var tweetsData = tweet.split(",\"");
+                
+                var classe = tweetsData[0];
+                var text = tweetsData[1];
+                console.log(classe + " => " + text);
+            });
+        };
+    }
+
+    //Export the class
+    module.exports = DataReader;
+}());
