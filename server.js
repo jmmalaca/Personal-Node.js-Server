@@ -3,10 +3,10 @@ var request = require('request'); //request npm module
 var url = require('url'); //url npm module
 var SentimentAnalysis = require('./SentimentAnalysis/SentimentAnalysis.js');
 
-//get a express app started...
+//[get a express app started]
 var serverApp = express();
 
-//route definitio:... home
+//[route definitio:... home]
 serverApp.get('/', function (req, response) {
     console.log("\n -Hello request");
 
@@ -15,7 +15,7 @@ serverApp.get('/', function (req, response) {
     });
 });
 
-//Route definition: /tweets/searchString
+//[Route definition: /tweets/searchString]
 serverApp.get('/sentiment/:searchString', function (req, response) {
     console.log("\n -Tweets Call...");
     
@@ -27,7 +27,7 @@ serverApp.get('/sentiment/:searchString', function (req, response) {
     var connector = require('./TwitterConnector/TwitterConnector.js');
 });
 
-//Start listen on port...
+//[Start listen on port]
 var server = serverApp.listen(8080, function () {
 
     var host = server.address().address;
@@ -38,6 +38,6 @@ var server = serverApp.listen(8080, function () {
     console.log('\nApp listening at http://%s:%s', host, port);
 });
 
-//Sentiment Analysis System Up and ready...
+//[Sentiment Analysis System Up and ready]
 var system = new SentimentAnalysis();
 system.Start();
