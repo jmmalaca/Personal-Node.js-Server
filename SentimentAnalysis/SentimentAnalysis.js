@@ -1,6 +1,4 @@
 ﻿//[Sentiment Analysis System]
-var DataReader = require('../SentimentData/DataReader.js');
-var SetupData = require('../SentimentData/SetupData.js');
 var NaiveBayes = require('../SentimentAnalysis/NaiveBayesClassifier.js');
 
 (function() {
@@ -13,22 +11,12 @@ var NaiveBayes = require('../SentimentAnalysis/NaiveBayesClassifier.js');
         //[Private Methods]
 
         //[Public Methods]
-        this.Start = function() {
-            console.log(" -Start Sentiment Analysis system...");
+        this.Start = function(data) {
+            console.log(" -Start Sentiment Classification system...");
 
-            //Read Data...
-            var reader = new DataReader();
-            var data = reader.Read();
-            //reader.PrintData(data);
-
-            //Set up data...
-            var setup = new SetupData();
-            data = setup.Preprocessor(data);
-            
             //Naive Bayes Classifier...
             var nb = new NaiveBayes();
             nb.Start(data);
-
         }
     }
 
