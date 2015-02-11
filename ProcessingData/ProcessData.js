@@ -34,25 +34,25 @@ var fs = require('fs');
             var time = end - start; //in miliseconds, seconds = 0.001 * time
             var seconds = 0.001 * time;
             if (seconds > 60) {
-                console.log("   -" + text + ", execution time: " + (seconds / 60) + "m");
-                console.log("   -" + text + ", execution time (hr): " + (endHR[0] / 60) + "m, " + (endHR[1] / 1000000) + "ms");
+                //console.log("  -" + text + ", execution time: " + (seconds / 60) + "m, or in HR: " + (endHR[0] / 60) + "m, " + (endHR[1] / 1000000) + "ms");
+                console.log("  -" + text + " Execution time: " + (endHR[0] / 60) + "m, " + (endHR[1] / 1000000) + "ms");
             } else {
-                console.log("   -" + text + ", execution time: " + seconds + "s");
-                console.log("   -" + text + ", execution time (hr): " + endHR[0] + "s" + (endHR[1] / 1000000) + "ms");
+                //console.log("  -" + text + ", execution time: " + seconds + "s, or in HR: " + endHR[0] + "s, " + (endHR[1] / 1000000) + "ms");
+                console.log("  -" + text + " Execution time: " + endHR[0] + "s, " + (endHR[1] / 1000000) + "ms");
             }
             
             // Get total load for all node processes
-            var cpuPercentage = cpu.nodeLoad(function (error, results) {
-                if (error) {
-                    return console.log(error);
-                }
-                console.log("   -Server CPU Load: " + results["load"] + "% needed");
-                console.log("   -Server processes: ");
-                results["found"].forEach(function(item) {
-                    console.log("   -Process[" + item["pid"] + "]: " + item["process"] + ", " + item["load"] + "%");
-                });
-                return results["found"].length + "," + results["load"];
-            });
+            //cpu.nodeLoad(function (error, results) {
+            //    if (error) {
+            //        return console.log(error);
+            //    }
+            //    console.log("   -Server CPU Load: " + results["load"] + "% needed");
+            //    console.log("   -Server processes: ");
+            //    results["found"].forEach(function(item) {
+            //        console.log("   -Process[" + item["pid"] + "]: " + item["process"] + ", " + item["load"] + "%");
+            //    });
+            //    return results["found"].length + "," + results["load"];
+            //});
             
             //var dataToAdd = [cpuPercentage, seconds];
             //if (cpuLoadsData[numberTextsProcessed] == null) {

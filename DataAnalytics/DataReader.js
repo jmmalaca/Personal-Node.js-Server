@@ -1,5 +1,6 @@
 ﻿//[Data reader]
 var fs = require('fs');
+var Emoticons = require('../DataAnalytics/Emoticons.js');
 
 (function() {
 
@@ -29,6 +30,8 @@ var fs = require('fs');
         var wilsonWordsFilePath = "./DataAnalytics/WilsonWords/subjclueslen1-HLTEMNLP05.tff";
         var texasPositiveWordsFilePath = "./DataAnalytics/TexasU/positive-words.txt";
         var texasNegativeWordsFilePath = "./DataAnalytics/TexasU/negative-words.txt";
+        var afinn96WordsFilePath = "./DataAnalytics/Afinn/AFINN-96.txt";
+        var afinn111WordsFilePath = "./DataAnalytics/Afinn/AFINN-111.txt";
 
         //[Private Methods]
         function readAcronyms() {
@@ -39,7 +42,7 @@ var fs = require('fs');
                 var lineData = line.split("-");
                 acronyms.push(lineData);
             });
-            console.log(" -Acronyms: " + acronyms.length);
+            console.log("  -Acronyms: " + acronyms.length);
         }
 
         function readStopWords() {
@@ -62,17 +65,18 @@ var fs = require('fs');
                     stopwords.push(line);
                 }
             });
-            console.log(" -StopWords: " + stopwords.length);
+            console.log("  -StopWords: " + stopwords.length);
         }
 
         function readBadWords() {
             var lines = fs.readFileSync(texasBadwordsFilePath);
             var data = lines.toString().split("\n");
             badwords = data.slice(1, data.length);
-            console.log(" -Badwords: " + badwords.length);
+            console.log("  -Badwords: " + badwords.length);
         }
 
         function readPolarityWords() {
+            //File 1...
             var lines = fs.readFileSync(wilsonWordsFilePath);
             var data = lines.toString().split("\n");
             //a line example: type=weaksubj len=1 word1=abandoned pos1=adj stemmed1=n priorpolarity=negative
@@ -99,7 +103,7 @@ var fs = require('fs');
                     neutralWords.push(word);
                 }
             });
-            //
+            //File 2...
             lines = fs.readFileSync(texasPositiveWordsFilePath);
             data = lines.toString().split("\n");
             var texasWords = data.slice(35, data.length);
@@ -108,6 +112,7 @@ var fs = require('fs');
                     positiveWords.push(word);
                 }
             });
+            //File 3...
             lines = fs.readFileSync(texasNegativeWordsFilePath);
             data = lines.toString().split("\n");
             texasWords = data.slice(35, data.length);
@@ -116,8 +121,40 @@ var fs = require('fs');
                     negativeWords.push(word);
                 }
             });
-            console.log(" -Words: Strong-subjective[" + subjectiveWords.length + "], Weak-subjective[" + objectiveWords.length + "]");
-            console.log(" -Words: Positive[" + positiveWords.length + "], Neutral[" + neutralWords.length + "], Negative[" + negativeWords.length + "]");
+            //File 4...
+            lines = fs.readFileSync(afinn96WordsFilePath);
+            data = lines.toString().split("\n");
+            data.forEach(function (line) {
+                var wordData = line.split("\t");
+                var value = parseInt(wordData[1]);
+                if (value < 0) {
+                    if (negativeWords.indexOf(wordData[0]) == -1) {
+                        negativeWords.push(wordData[0]);
+                    }
+                } else {
+                    if (positiveWords.indexOf(wordData[0]) == -1) {
+                        positiveWords.push(wordData[0]);
+                    }
+                }
+            });
+            //File 5...
+            lines = fs.readFileSync(afinn111WordsFilePath);
+            data = lines.toString().split("\n");
+            data.forEach(function (line) {
+                var wordData = line.split("\t");
+                var value = parseInt(wordData[1]);
+                if (value < 0) {
+                    if (negativeWords.indexOf(wordData[0]) == -1) {
+                        negativeWords.push(wordData[0]);
+                    }
+                } else {
+                    if (positiveWords.indexOf(wordData[0]) == -1) {
+                        positiveWords.push(wordData[0]);
+                    }
+                }
+            });
+            console.log("  -Words: Strong-subjective[" + subjectiveWords.length + "], Weak-subjective[" + objectiveWords.length + "]");
+            console.log("  -Words: Positive[" + positiveWords.length + "], Neutral[" + neutralWords.length + "], Negative[" + negativeWords.length + "]");
         }
 
         function readTweets() {
@@ -140,12 +177,12 @@ var fs = require('fs');
                 }
             });
 
-            console.log(" -Tweets: Positive[" + positiveTweets.length + "], Neutral[" + neutralTweets.length + "], Negative[" + negativeTweets.length + "]");
+            console.log("  -Tweets: Positive[" + positiveTweets.length + "], Neutral[" + neutralTweets.length + "], Negative[" + negativeTweets.length + "]");
         }
 
         //[Public Methods]
         this.ReadInitialData = function() {
-            console.log("Read All Systems Data...");
+            console.log("\n -Read All Systems Data...");
             readAcronyms();
             readStopWords();
             readBadWords();
@@ -153,32 +190,24 @@ var fs = require('fs');
             readTweets();
         };
 
-        this.getDataInfo = function() {
+        this.getDataInfo = function () {
+            var emoticons = new Emoticons();
             var info = {
-                "acronyms": acronyms.length,
-                "acronymsExamples": acronyms.slice(0, 5),
-                "stopwords": stopwords.length,
-                "stopwordsExamples": stopwords.slice(0, 5),
-                "badwords": badwords.length,
-                "badwordsExamples": badwords.slice(0, 5),
-                "subjectiveWords": subjectiveWords.length,
-                "subjectiveWordsExamples": subjectiveWords.slice(0, 5),
-                "objectiveWords": objectiveWords.length,
-                "objectiveWordsExamples": objectiveWords.slice(0, 5),
-                "positiveWords": positiveWords.length,
-                "positiveWordsExamples": positiveWords.slice(0, 5),
-                "neutralWords": neutralWords.length,
-                "neutralWordsExamples": neutralWords.slice(0, 5),
-                "negativeWords": negativeWords.length,
-                "negativeWordsExamples": negativeWords.slice(0, 5),
-                "positiveTweets": positiveTweets.length,
-                "positiveTweetsExamples": positiveTweets.slice(0, 5),
-                "neutralTweets": neutralTweets.length,
-                "neutralTweetsExamples": neutralTweets.slice(0, 5),
-                "negativeTweets": negativeTweets.length,
-                "negativeTweetsExamples": negativeTweets.slice(0, 5),
+                "Acronyms": acronyms.length,
+                "Stopwords": stopwords.length,
+                "Badwords": badwords.length,
+                "Positive_Emoticons": emoticons.getEmoticonsCount("positive"),
+                "Negative_Emoticons": emoticons.getEmoticonsCount("negative"),
+                "Subjective_Words": subjectiveWords.length,
+                "Objective_Words": objectiveWords.length,
+                "Positive_Words": positiveWords.length,
+                "Neutral_Words": neutralWords.length,
+                "Negative_Words": negativeWords.length,
+                "Positive_Tweets": positiveTweets.length,
+                "Neutral_Tweets": neutralTweets.length,
+                "Negative_Tweets": negativeTweets.length
             }
-            return JSON.stringify(info);
+            return info;
         };
 
         this.getAcronyms = function() {
