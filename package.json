@@ -1,0 +1,28 @@
+{
+  "name": "ServerApp",
+  "version": "0.0.0",
+  "description": "ServerApp",
+  "main": "server.js",
+  "author": {
+    "name": "jose.miguel.malaca",
+    "email": "jose.miguel.malaca@me.com"
+  },
+  "dependencies": {
+    "0": "0.0.0",
+    "async": "^0.9.0",
+    "ejs": "^1.0.0",
+    "express": "^4.11.2",
+    "math": "0.0.3",
+    "mathjs": "^1.3.0",
+    "oauth": "^0.9.12",
+    "prettyjson": "^1.1.0",
+    "request": "^2.53.0",
+    "retext": "^0.5.1",
+    "retext-inspect": "^0.4.2",
+    "retext-pos": "^0.2.1",
+    "retext-visit": "^0.2.6",
+    "sa": "^0.2.49",
+    "url": "^0.10.2",
+    "windows-cpu": "^0.1.3"
+  }
+}
